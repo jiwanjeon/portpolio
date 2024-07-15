@@ -18,6 +18,7 @@ defmodule PersonalPortfolioWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live("/jjw94", MainLive.Index, :index)
   end
 
   # Other scopes may use custom stacks.

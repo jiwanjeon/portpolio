@@ -1,0 +1,42 @@
+<.header>
+  Listing Main
+  <:actions>
+    <.link patch={~p"/main/new"}>
+      <.button>New Main</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="main"
+  rows={@streams.main_collection}
+  row_click={fn {_id, main} -> JS.navigate(~p"/main/#{main}") end}
+>
+  <:col :let={{_id, main}} label="Name"><%= main.name %></:col>
+  <:col :let={{_id, main}} label="Email"><%= main.email %></:col>
+  <:action :let={{_id, main}}>
+    <div class="sr-only">
+      <.link navigate={~p"/main/#{main}"}>Show</.link>
+    </div>
+    <.link patch={~p"/main/#{main}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, main}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: main.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="main-modal" show on_cancel={JS.patch(~p"/main")}>
+  <.live_component
+    module={PersonalPortfolioWeb.MainLive.FormComponent}
+    id={@main.id || :new}
+    title={@page_title}
+    action={@live_action}
+    main={@main}
+    patch={~p"/main"}
+  />
+</.modal>

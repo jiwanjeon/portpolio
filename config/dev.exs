@@ -5,7 +5,7 @@ config :personal_portfolio, PersonalPortfolio.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "personal_portfolio_dev",
+  database: "postgres",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
